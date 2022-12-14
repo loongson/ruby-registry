@@ -1,0 +1,22 @@
+libmagic:
+  version: "5.39"
+  sha256: "dfc03d49afd3532804b14bce77dd42dbb69180c792c6d6d9667cb642caf0fe30"
+  #  Manually verified checksum:
+  #
+  #    $ gpg --verify file-5.39.tar.gz.asc file-5.39.tar.gz
+  #    gpg: Signature made Mon Jun 15 02:06:08 2020 CEST
+  #    gpg:                using DSA key 0x71112AB16CB33B3A
+  #    gpg: Good signature from "Christos Zoulas (personal key) <christos@zoulas.com>" [unknown]
+  #    gpg:                 aka "Christos Zoulas (NetBSD key) <christos@netbsd.org>" [unknown]
+  #    gpg: WARNING: This key is not certified with a trusted signature!
+  #    gpg:          There is no indication that the signature belongs to the owner.
+  #    Primary key fingerprint: BE04 995B A8F9 0ED0 C0C1  76C4 7111 2AB1 6CB3 3B3A
+  #
+  #  Using this PGP signature:
+  #
+  #    -----BEGIN PGP SIGNATURE-----
+  #
+  #    iEYEABECAAYFAl7mu3AACgkQcREqsWyzOzppXACgoqokKabq7bwN9aKvd/H/yhF+
+  #    9PUAoOPrAtxFkfNUvtqK/trY+v/Gk5JM
+  #    =tA6a
+  #    -----END PGP SIGNATURE-----
