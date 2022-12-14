@@ -1,0 +1,39 @@
+From 2fd21ae80f0d190d37c16f4e011dfcb433fe2aad Mon Sep 17 00:00:00 2001
+From: zangruochen <zangruochen@loongson.cn>
+Date: Tue, 6 Dec 2022 16:21:55 +0800
+Subject: [PATCH] Add loongarch64 support
+
+---
+ config.guess | 3 +++
+ config.sub   | 1 +
+ 2 files changed, 4 insertions(+)
+
+diff --git a/config.guess b/config.guess
+index f50dcdb..015efd1 100755
+--- a/config.guess
++++ b/config.guess
+@@ -964,6 +964,9 @@ EOF
+     k1om:Linux:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
+ 	exit ;;
++    loongarch32:Linux:*:* | loongarch64:Linux:*:*)
++	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
++	exit ;;
+     m32r*:Linux:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
+ 	exit ;;
+diff --git a/config.sub b/config.sub
+index c874b7a..58fdd78 100755
+--- a/config.sub
++++ b/config.sub
+@@ -1185,6 +1185,7 @@ case $cpu-$vendor in
+ 			| k1om \
+ 			| le32 | le64 \
+ 			| lm32 \
++			| loongarch32 | loongarch64 \
+ 			| m32c | m32r | m32rle \
+ 			| m5200 | m68000 | m680[012346]0 | m68360 | m683?2 | m68k \
+ 			| m6811 | m68hc11 | m6812 | m68hc12 | m68hcs12x \
+-- 
+2.20.1
+
