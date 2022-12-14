@@ -93,6 +93,9 @@ extern "C" {
 #elif defined(__AARCH64EL__) || defined(_M_ARM64)
 #define OPENSSL_64_BIT
 #define OPENSSL_AARCH64
+#elif defined(__loongarch64)
+#define OPENSSL_64_BIT
+#define OPENSSL_LOONGARCH64
 #elif defined(__ARMEL__) || defined(_M_ARM)
 #define OPENSSL_32_BIT
 #define OPENSSL_ARM
