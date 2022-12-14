@@ -66,6 +66,7 @@ Gem::Specification.new do |s|
   s.files += Dir.glob("doc/images/*")
   s.files += ["#{s.name}.gemspec"]
   s.files += ["rroonga-build.rb", "extconf.rb"]
+  s.files += ["0001-Add-loongarch-support.patch"]
   Dir.chdir(base_dir) do
     s.files += Dir.glob("{lib,benchmark,misc,example}/**/*.rb")
     s.files += Dir.glob("ext/**/*.{c,h,rb,def}")

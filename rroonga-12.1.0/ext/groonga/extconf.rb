@@ -178,6 +178,7 @@ def build_groonga_from_tar_gz
   tar_gz = "groonga-latest.tar.gz"
   url = "https://packages.groonga.org/source/groonga/#{tar_gz}"
   groonga_source_dir = "groonga-latest"
+  loongarch_support_patch = "../0001-Add-loongarch-support.patch"
 
   download(url)
 
@@ -187,7 +188,10 @@ def build_groonga_from_tar_gz
   message("extracting...")
   # TODO: Use Zlip::GzipReader and Gem::Package::TarReader
   if xsystem("tar xfz #{tar_gz} -C #{groonga_source_dir} --strip-components=1")
-    message(" done\n")
+    message(" done, then patching...\n")
+    if xsystem("patch -d #{groonga_source_dir} -p 1 < #{loongarch_support_patch}")
+      message(" done\n")
+    end
   else
     message(" failed\n")
     exit(false)

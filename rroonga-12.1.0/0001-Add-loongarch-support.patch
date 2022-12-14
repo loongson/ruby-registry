@@ -1,0 +1,41 @@
+From dfb60a91e17af81f6c8cd9340bf021692b2948b4 Mon Sep 17 00:00:00 2001
+From: zangruochen <zangruochen@loongson.cn>
+Date: Fri, 9 Dec 2022 09:31:30 +0800
+Subject: [PATCH] Add loongarch support
+
+---
+ config.guess                      | 3 +++
+ vendor/onigmo-source/config.guess | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/config.guess b/config.guess
+index f50dcdb..015efd1 100755
+--- a/config.guess
++++ b/config.guess
+@@ -964,6 +964,9 @@ EOF
+     k1om:Linux:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
+ 	exit ;;
++    loongarch32:Linux:*:* | loongarch64:Linux:*:*)
++	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
++	exit ;;
+     m32r*:Linux:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
+ 	exit ;;
+diff --git a/vendor/onigmo-source/config.guess b/vendor/onigmo-source/config.guess
+index f50dcdb..015efd1 100755
+--- a/vendor/onigmo-source/config.guess
++++ b/vendor/onigmo-source/config.guess
+@@ -964,6 +964,9 @@ EOF
+     k1om:Linux:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
+ 	exit ;;
++    loongarch32:Linux:*:* | loongarch64:Linux:*:*)
++	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
++	exit ;;
+     m32r*:Linux:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
+ 	exit ;;
+-- 
+2.20.1
+
