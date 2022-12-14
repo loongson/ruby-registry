@@ -1,0 +1,113 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2011-2014  Kouhei Sutou <kou@clear-code.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License version 2.1 as published by the Free Software Foundation.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+require "ostruct"
+require "optparse"
+require "pathname"
+
+require "groonga"
+
+options = OpenStruct.new
+options.tables = []
+options.exclude_tables = []
+options.dump_schema = true
+options.dump_indexes = true
+options.dump_tables = true
+options.order_by = "id"
+options.max_records = -1
+option_parser = OptionParser.new do |parser|
+  parser.version = Groonga::BINDINGS_VERSION
+  parser.banner += " DB_PATH"
+
+  parser.on("--no-dump-schema",
+            "don't dump schema.") do |boolean|
+    options.dump_schema = boolean
+  end
+
+  parser.on("--no-dump-indexes",
+            "don't dump indexes.") do |boolean|
+    options.dump_indexes = boolean
+  end
+
+  parser.on("--no-dump-tables",
+            "don't dump tables.") do |boolean|
+    options.dump_tables = boolean
+  end
+
+  parser.on("-t=TABLE", "--table=TABLE",
+            "dump only TABLE.",
+            "use this option multiple to dump multiple tables.",
+            "use /.../ as TABLE to match table name with regexp.") do |table|
+    case table
+    when /\A\/(.*)\/(i)?\z/
+      options.tables << Regexp.new($1, $2 == "i")
+    when
+      options.tables << table
+    end
+  end
+
+  parser.on("--exclude-table=TABLE",
+            "don't dump TABLE.",
+            "use this option multiple to not dump multiple tables.",
+            "use /.../ as TABLE to match table name with regexp.") do |table|
+    case table
+    when /\A\/(.*)\/(i)?\z/
+      options.exclude_tables << Regexp.new($1, $2 == "i")
+    when
+      options.exclude_tables << table
+    end
+  end
+
+  types = ["id", "key"]
+  parser.on("--order-by=TYPE", types,
+            "sort output records by TYPE.",
+            "available TYPEs: #{types.join(', ')}",
+            "(#{options.order_by})") do |type|
+    options.order_by = type
+  end
+
+  parser.on("--max-records=NUMBER", Integer,
+            "max NUMBER of records to dump.",
+            "you can use -1 to dump all records.",
+            "(#{options.max_records})") do |number|
+    options.max_records = number
+  end
+end
+args = option_parser.parse!(ARGV)
+
+if args.size != 1
+  puts(option_parser)
+  exit(false)
+end
+db_path = args[0]
+
+database = Groonga::Database.open(db_path)
+dumper_options = {
+  :database => database,
+  :output => $stdout,
+  :error_output => $stderr,
+  :dump_schema => options.dump_schema,
+  :dump_indexes => options.dump_indexes,
+  :dump_tables => options.dump_tables,
+  :tables => options.tables,
+  :exclude_tables => options.exclude_tables,
+  :order_by => options.order_by,
+  :max_records => options.max_records,
+}
+database_dumper = Groonga::DatabaseDumper.new(dumper_options)
+database_dumper.dump
