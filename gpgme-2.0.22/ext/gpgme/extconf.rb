@@ -85,10 +85,17 @@ EOS
 
   libassuan_recipe = MiniPortile.new('libassuan', '2.5.5').tap do |recipe|
     recipe.target = File.join(ROOT, "ports")
-    recipe.files = [{
-      :url => "https://www.gnupg.org/ftp/gcrypt/#{recipe.name}/#{recipe.name}-#{recipe.version}.tar.bz2",
-      :sha256 => '8e8c2fcc982f9ca67dcbb1d95e2dc746b1739a4668bc20b3a3c5be632edb34e4'
-    }]
+    if Gem::Platform.local.cpu=="loongarch64"
+      recipe.files = [{
+        :url => "http://ftp.loongnix.cn/ruby/ruby-registry/gpgme/2.0.22/#{recipe.name}-#{recipe.version}.tar.bz2",
+        :sha256 => 'b846661954e42a9c827e2601f8db026c106d16b6115929f6ed150b99d8b3162a'
+      }]
+    else
+      recipe.files = [{
+        :url => "https://www.gnupg.org/ftp/gcrypt/#{recipe.name}/#{recipe.name}-#{recipe.version}.tar.bz2",
+        :sha256 => '8e8c2fcc982f9ca67dcbb1d95e2dc746b1739a4668bc20b3a3c5be632edb34e4'
+      }]
+    end
     recipe.configure_options = [
       '--disable-shared',
       '--enable-static',
