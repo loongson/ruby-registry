@@ -28,6 +28,8 @@
  */
 #include "scrypt_platform.h"
 
+#ifndef __loongarch__
+
 #include <sys/types.h>
 #ifndef __MINGW32__
 #include <sys/mman.h>
@@ -367,3 +369,5 @@ err0:
 	/* Failure! */
 	return (-1);
 }
+
+#endif //ifndef __loongarch__
